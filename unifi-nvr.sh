@@ -3,7 +3,7 @@ set -x
 
 SERVICE="unifi-nvr"
 IMAGE="pducharme/unifi-video-controller"
-VERSION="3.10.6"
+VERSION="3.10.13"
 LOCALDIR="/data01/services/${SERVICE}"
 
 docker stop "${SERVICE}"
@@ -27,15 +27,15 @@ docker run -d \
 	--cap-add=SETUID \
 	--cap-add=SETGID \
 	--security-opt=apparmor:unconfined \
-        -p 1935:1935 \
-        -p 6666:6666 \
-        -p 7080:7080 \
-        -p 7442-7447:7442-7447 \
-        -p 7442-7447:7442-7447/udp \
-        -v ${LOCALDIR}/data:/var/lib/unifi-video \
-        -v ${LOCALDIR}/videos:/var/lib/unifi-video/videos \
-        -e TZ=America/Los_Angeles \
-        -e PUID=1001 \
-        -e PGID=1001 \
-        -e DEBUG=1 \
-        ${IMAGE}:${VERSION}
+    -p 1935:1935 \
+    -p 6666:6666 \
+    -p 7080:7080 \
+    -p 7442-7447:7442-7447 \
+    -p 7442-7447:7442-7447/udp \
+    -v ${LOCALDIR}/data:/var/lib/unifi-video \
+    -v ${LOCALDIR}/videos:/var/lib/unifi-video/videos \
+    -e TZ=America/Los_Angeles \
+    -e PUID=1001 \
+    -e PGID=1001 \
+    -e DEBUG=1 \
+    ${IMAGE}:${VERSION}

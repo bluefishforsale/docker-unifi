@@ -2,7 +2,7 @@
 
 SERVICE="unifi-controller"
 IMAGE="linuxserver/unifi-controller"
-VERSION="5.14.23-ls75"
+VERSION="version-6.0.23"
 LOCALDIR="/data01/services/${SERVICE}"
 
 docker stop ${SERVICE}
