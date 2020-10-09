@@ -1,16 +1,19 @@
 #!/usr/bin/env bash
+set -x
 
 SERVICE="unifi-nvr"
 IMAGE="pducharme/unifi-video-controller"
-VERSION="latest"
+VERSION="3.10.6"
 LOCALDIR="/data01/services/${SERVICE}"
 
+docker stop "${SERVICE}"
 docker rm -f "${SERVICE}"
+docker images | egrep "${IMAGE}\ *${VERSION}" | awk '{print $3}' | xargs docker rmi
 
 dirs="${LOCALDIR}/data ${LOCALDIR}/videos ${LOCALDIR}/cache"
 for d in ${dirs} ; do
 	test -d ${d} || mkdir -p ${d}
-	sudo chown -R 1001:1001 ${d}
+	# sudo chown -R 1001:1001 ${d}
 done
 
 docker run -d \

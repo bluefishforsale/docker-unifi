@@ -1,0 +1,23 @@
+#!/usr/bin/with-contenv bash
+
+NAME=unifi-video
+
+BASEDIR="/usr/lib/${NAME}"
+DATADIR="/config/data"
+
+# create our folders
+mkdir -p \
+	/config/{data,logs}
+
+# create symlinks for config
+[[ -L ${BASEDIR}/data && ! ${BASEDIR}/data -ef /config/data ]] && unlink ${BASEDIR}/data
+[[ -L ${BASEDIR}/logs && ! ${BASEDIR}/logs -ef /config/logs ]] && unlink ${BASEDIR}/logs
+[[ ! -L ${BASEDIR}/data ]] && ln -s /config/data ${BASEDIR}/data
+[[ ! -L ${BASEDIR}/logs ]] && ln -s /config/logs ${BASEDIR}/logs
+
+# start the wizard if no existing config is present
+[[ ! -f /config/data/system.properties ]] && cp -f ${BASEDIR}/etc/system.properties /config/data/
+[[ ! -f /config/data/ufv-truststore ]] && cp -f ${BASEDIR}/etc/ufv-truststore /config/data/
+
+# permissions
+chown -R unifi-video:unifi-video /config
